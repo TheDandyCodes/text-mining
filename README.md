@@ -1,1 +1,1 @@
-# text-mining
+# Information Discovery in Texts
