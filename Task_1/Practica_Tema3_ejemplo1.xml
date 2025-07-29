@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE TEI SYSTEM "tei_all.dtd">
-<TEI xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns="http://www.tei-c.org/ns/1.0">
+<TEI>
    <teiHeader>
       <fileDesc>
          <titleStmt>
@@ -39,6 +39,7 @@
                </titleStmt>
                <extent>16p. ; 8⁰.</extent>
                <publicationStmt>
+                  <publisher>Unknown</publisher>
                   <pubPlace>[London?,</pubPlace>
                   <date>1730?]</date>
                </publicationStmt>
@@ -56,7 +57,7 @@
       TEI @ Oxford.
       </p>
          </projectDesc>
-         <editorialDecl num="4">
+         <editorialDecl>
             <p>This electronic text file was keyed from page images and partially proofread for accuracy. Character capture and encoding have been done following the guidelines of the ECCO Text Creation Partnership, which correspond roughly to the recommendations found in Level 4 of the TEI in Libraries Guidelines. Digital page images are linked to the text file.</p>
          </editorialDecl>
          <listPrefixDef>
