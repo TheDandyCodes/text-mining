@@ -143,17 +143,43 @@ Los **hooks** son scripts que se ejecutan automáticamente en ciertos momentos d
 - ✅ Elimina espacios innecesarios
 - ✅ Verifica sintaxis de archivos
 
-### Configuración inicial (ya está hecho en este proyecto)
+### Configuración paso a paso
 
+#### Paso 1: Instalar pre-commit
 ```bash
-# 1. Instalar pre-commit (ya incluido en dependencies)
+# Instalar pre-commit como dependencia de desarrollo
 uv add --dev pre-commit ruff
-
-# 2. Instalar los hooks en tu repositorio git
-uv run pre-commit install
-
-# ¡Listo! Ahora funciona automáticamente
 ```
+Esto instala las herramientas pero **aún no las activa** en tu repositorio.
+
+#### Paso 2: Crear archivo de configuración
+Necesitas crear `.pre-commit-config.yaml` en la raíz del proyecto:
+```yaml
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.9
+    hooks:
+      - id: ruff              # Linter
+      - id: ruff-format       # Formateador
+```
+Este archivo le dice a pre-commit **qué verificaciones hacer**.
+
+#### Paso 3: Activar los hooks en Git
+```bash
+uv run pre-commit install
+```
+**¿Por qué este comando?**
+- Crea un archivo especial en `.git/hooks/pre-commit`
+- Este archivo se ejecuta automáticamente **antes de cada commit**
+- Sin este paso, pre-commit NO funciona automáticamente
+
+**Nota**: En este proyecto ya está todo configurado. Solo necesitas clonar y usar.
 
 ### ¿Cómo funciona en la práctica?
 
@@ -191,12 +217,6 @@ uv run pre-commit run --all-files
 
 # Ejecutar hooks solo en archivos específicos
 uv run pre-commit run --files mi_archivo.py
-
-# Script rápido para formatear código
-./format_code.sh
-
-# Saltarse hooks temporalmente (¡no recomendado!)
-git commit -m "mensaje" --no-verify
 ```
 
 ### Herramientas incluidas (Ruff)
@@ -229,44 +249,50 @@ repos:
       - id: ruff-format       # Formateador (hace código bonito)
 ```
 
-### Demostración práctica
-
-Prueba esto para ver cómo funciona:
-
-```bash
-# 1. Crear archivo con código mal formateado
-echo 'import os,sys
-def funcion_mal( x,y ):
-    return x+y    ' > test_malo.py
-
-# 2. Intentar hacer commit
-git add test_malo.py
-git commit -m "código malo"
-
-# 3. Ver cómo pre-commit lo arregla automáticamente:
-# ❌ ruff...........................Failed
-# - import unused detected
-# - multiple imports on one line
-#
-# ✅ ruff format...................Passed
-# - code automatically formatted
-
-# 4. El archivo ahora está limpio y formateado
-cat test_malo.py
-# import os
-# import sys
-#
-# def funcion_mal(x, y):
-#     return x + y
+#### Estructura de archivos:
+```
+tu-proyecto/
+├── .pre-commit-config.yaml     # ← Qué hooks ejecutar
+├── .git/
+│   └── hooks/
+│       └── pre-commit          # ← Script que ejecuta Git (creado automáticamente)
+└── pyproject.toml              # ← Configuración de Ruff
 ```
 
-### Beneficios
+### Solución de problemas comunes
 
-✅ **Código consistente**: Todo el equipo usa el mismo formato
-✅ **Menos errores**: Detecta problemas antes del commit
-✅ **Automático**: No tienes que acordarte de formatear
-✅ **Rápido**: Ruff es 10-100x más rápido que herramientas tradicionales
-✅ **Colaboración**: PRs más limpios, menos discusiones sobre estilo
+#### "Los hooks no se ejecutan automáticamente"
+```bash
+# Verificar si están instalados
+ls .git/hooks/pre-commit
+
+# Si no existe, instalarlos
+uv run pre-commit install
+```
+
+#### "Error: pre-commit command not found"
+```bash
+# Instalar pre-commit primero
+uv add --dev pre-commit
+
+# Luego instalar hooks
+uv run pre-commit install
+```
+
+#### "Quiero saltarme los hooks temporalmente"
+```bash
+# Solo para esta vez (NO recomendado)
+git commit -m "mensaje" --no-verify
+```
+
+#### "¿Cómo desinstalar pre-commit?"
+```bash
+# Remover hooks de git
+uv run pre-commit uninstall
+
+# O manualmente
+rm .git/hooks/pre-commit
+```
 
 ---
 
