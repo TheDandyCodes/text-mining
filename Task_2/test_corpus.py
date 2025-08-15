@@ -20,11 +20,13 @@ except LookupError:
     print("Downloading NLTK treebank corpus...")
     nltk.download("treebank")
 
+
 def extract_tokens_from_gold(gold) -> list[list[str]]:
     """
     Extracts tokens from the gold standard data.
     """
     return [[str(word) for word, _ in sent] for sent in gold]
+
 
 def extract_raw_text(gold):
     """
@@ -51,10 +53,9 @@ def compare_pos_taggers(pos_tag_output_1, pos_tag_output_2) -> list[POSMismatch]
         for (word1, tag1), (word2, tag2) in zip(sent1, sent2):
             if tag1 != tag2:
                 # print(f"Tag mismatch: {tag1} != {tag2}")
-                mismatches.append(
-                    {"word1": word1, "tag1": tag1, "word2": word2, "tag2": tag2}
-                )
+                mismatches.append({"word1": word1, "tag1": tag1, "word2": word2, "tag2": tag2})
     return mismatches
+
 
 def accuracy(pos_tag_output, gold) -> float:
     """
@@ -80,7 +81,9 @@ if __name__ == "__main__":
     mismatches = compare_pos_taggers(pos_tag_output_st_nltk, pos_tag_output_spacy)
     print("Mismatches between Stanford NLTK and spaCy POS taggers:")
     for mismatch in mismatches:
-        print(f"Word: {mismatch['word1']}, Stanford NLTK Tag: {mismatch['tag1']}, spaCy Tag: {mismatch['tag2']}")
+        print(
+            f"Word: {mismatch['word1']}, Stanford NLTK Tag: {mismatch['tag1']}, spaCy Tag: {mismatch['tag2']}"
+        )
 
     acc_st_nltk = accuracy(pos_tag_output_st_nltk, gold)
     acc_spacy = accuracy(pos_tag_output_spacy, gold)

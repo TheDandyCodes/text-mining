@@ -43,7 +43,7 @@ QUICKSTART
 -----------------------------------------------
 
 The Stanford POS Tagger is designed to be used from the command line or
-programmatically via its API.  
+programmatically via its API.
 
 There is a GUI interface, but it is for
 demonstration purposes only; most features of the tagger can only be
@@ -157,7 +157,7 @@ models
   less accurate than bidirectional-distsim) - feel free to download any
   other taggers you need from the POS tagger website. More information
   about the models can be found in the README-Models.txt file in this
-  directory. 
+  directory.
 
 sample-input.txt
 
@@ -205,47 +205,47 @@ processing.
 CHANGES
 -----------------------------------------------
 
-2020-11-17    4.2.0     Add currency data for English models. 
+2020-11-17    4.2.0     Add currency data for English models.
 
-2020-08-06    4.1.0     Add missing extractor, spanish tokenization 
-                        upgrades 
+2020-08-06    4.1.0     Add missing extractor, spanish tokenization
+                        upgrades
 
-2020-05-22    4.0.0     Model tokenization updated to UDv2.0 
+2020-05-22    4.0.0     Model tokenization updated to UDv2.0
 
-2018-10-16    3.9.2     New English models, better currency symbol 
-                        handling 
+2018-10-16    3.9.2     New English models, better currency symbol
+                        handling
 
-2018-02-27    3.9.1     new French UD model 
+2018-02-27    3.9.1     new French UD model
 
-2017-06-09    3.8.0     new Spanish and French UD models 
+2017-06-09    3.8.0     new Spanish and French UD models
 
-2016-10-31    3.7.0     Update for compatibility, German UD model 
+2016-10-31    3.7.0     Update for compatibility, German UD model
 
-2015-12-09    3.6.0     Updated for compatibility 
+2015-12-09    3.6.0     Updated for compatibility
 
-2015-04-20    3.5.2     Update for compatibility 
+2015-04-20    3.5.2     Update for compatibility
 
-2015-01-29    3.5.1     General bugfixes 
+2015-01-29    3.5.1     General bugfixes
 
-2014-10-26    3.5.0     Upgrade to Java 1.8 
+2014-10-26    3.5.0     Upgrade to Java 1.8
 
-2014-08-27    3.4.1     Add Spanish models 
+2014-08-27    3.4.1     Add Spanish models
 
-2014-06-16      3.4     Using CC tagset for French 
+2014-06-16      3.4     Using CC tagset for French
 
-2014-01-04    3.3.1     Bugfix release 
+2014-01-04    3.3.1     Bugfix release
 
-2013-11-12    3.3.0     Add imperatives to English training data 
+2013-11-12    3.3.0     Add imperatives to English training data
 
-2013-06-19    3.2.0     Decrease size and improve speed of tagger 
-                        models for all languages 
+2013-06-19    3.2.0     Decrease size and improve speed of tagger
+                        models for all languages
 
-2013-04-04    3.1.5     Speed improvements, ctb7 model, -nthreads 
-                        option 
+2013-04-04    3.1.5     Speed improvements, ctb7 model, -nthreads
+                        option
 
-2012-11-11    3.1.4     Updated Chinese model 
+2012-11-11    3.1.4     Updated Chinese model
 
-2012-07-09    3.1.3     Minor bug fixes 
+2012-07-09    3.1.3     Minor bug fixes
 
 2012-05-22    3.1.2     Updated for compatibility with other releases
 
@@ -312,4 +312,3 @@ provide assistance on a best-effort basis. You can also look at the list
 archives via https://mailman.stanford.edu/pipermail/java-nlp-user/. For
 licensing questions, please see the tagger webpage or contact Stanford
 JavaNLP at java-nlp-support@lists.stanford.edu.
-

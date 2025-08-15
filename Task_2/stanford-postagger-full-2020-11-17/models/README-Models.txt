@@ -4,8 +4,8 @@ The Leland Stanford Junior University. All Rights Reserved.
 
 This document contains (some) information about the models included in
 this release and that may be downloaded for the POS tagger website at
-http://nlp.stanford.edu/software/tagger.html . All of the models mentioned 
-in this document are in the downloaded package in the same directory as this 
+http://nlp.stanford.edu/software/tagger.html . All of the models mentioned
+in this document are in the downloaded package in the same directory as this
 readme. All taggers are accompanied by the props files used to create
 them; please examine these files for more detailed information about the
 creation of the taggers.

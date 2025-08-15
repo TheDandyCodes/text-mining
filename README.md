@@ -106,16 +106,16 @@ make hooks-update
 
 ### Command Details
 
-- **`make install`**: 
+- **`make install`**:
   - Downloads and installs `uv` if not already present
   - Installs pre-commit hooks for code quality checks
   - Sets up the development environment automatically
 
-- **`make hooks`**: 
+- **`make hooks`**:
   - Runs all configured pre-commit hooks on every file in the repository
   - Useful for checking code quality across the entire project
 
-- **`make hooks-update`**: 
+- **`make hooks-update`**:
   - Updates all pre-commit hooks to their latest versions
   - Recommended to run periodically to keep tools up-to-date
 

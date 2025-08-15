@@ -1,0 +1,29 @@
+# Pre-commit configuration for Python projects
+repos:
+  # Hooks básicos para archivos en general
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace        # Elimina espacios en blanco al final de líneas
+      - id: end-of-file-fixer         # Asegura que archivos terminen con nueva línea
+      - id: check-yaml                # Verifica sintaxis de archivos YAML
+      - id: check-json                # Verifica sintaxis de archivos JSON
+      - id: check-toml                # Verifica sintaxis de archivos TOML
+      - id: check-merge-conflict      # Detecta marcadores de merge conflict
+      - id: check-added-large-files   # Previene archivos grandes (>500kB)
+      - id: debug-statements          # Detecta declaraciones de debug (pdb, etc)
+
+  # Formateo de código Python con black
+  - repo: https://github.com/psf/black
+    rev: 24.8.0
+    hooks:
+      - id: black
+        language_version: python3
+        args: [--line-length=100]
+
+  # Ordenamiento de imports
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: [--profile=black]
