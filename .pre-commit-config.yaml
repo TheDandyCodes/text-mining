@@ -13,17 +13,12 @@ repos:
       - id: check-added-large-files   # Previene archivos grandes (>500kB)
       - id: debug-statements          # Detecta declaraciones de debug (pdb, etc)
 
-  # Formateo de código Python con black
-  - repo: https://github.com/psf/black
-    rev: 24.8.0
+  # Ruff: Linter y formateador todo-en-uno (reemplaza black, isort, flake8)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.9
     hooks:
-      - id: black
-        language_version: python3
-        args: [--line-length=100]
-
-  # Ordenamiento de imports
-  - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
-        args: [--profile=black]
+      # Ejecutar el linter de Ruff
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      # Ejecutar el formateador de Ruff
+      - id: ruff-format

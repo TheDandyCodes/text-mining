@@ -3,7 +3,7 @@ from typing import TypedDict
 import nltk
 from nltk.corpus import treebank
 from pos_spacy import spacy_pos
-from standford_pos_nltk import stanford_pos, tokenize_text_nltk
+from standford_pos_nltk import stanford_pos
 
 
 class POSMismatch(TypedDict):
@@ -64,7 +64,7 @@ def accuracy(pos_tag_output, gold) -> float:
     correct = 0
     total = 0
     for sent, gold_sent in zip(pos_tag_output, gold):
-        for (word, tag), (gold_word, gold_tag) in zip(sent, gold_sent):
+        for (_word, tag), (_gold_word, gold_tag) in zip(sent, gold_sent):
             if tag == gold_tag:
                 correct += 1
             total += 1

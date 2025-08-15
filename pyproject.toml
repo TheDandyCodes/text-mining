@@ -17,4 +17,83 @@ dev = [
     "flake8>=7.3.0",
     "isort>=6.0.1",
     "pre-commit>=4.3.0",
+    "ruff>=0.12.9",
 ]
+
+# Configuración de Ruff
+[tool.ruff]
+# Longitud máxima de línea
+line-length = 100
+
+# Versión de Python objetivo
+target-version = "py38"
+
+# Directorios a excluir
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+    "Task_2/stanford-postagger-full-2020-11-17",
+    "Task_2/__pycache__",
+]
+
+[tool.ruff.lint]
+# Habilitar reglas de linting
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # Pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+]
+
+# Reglas a ignorar
+ignore = [
+    "E501",   # line too long, handled by ruff format
+    "B008",   # do not perform function calls in argument defaults
+    "C901",   # too complex
+]
+
+# Permitir corrección automática para estas reglas
+fixable = ["ALL"]
+unfixable = []
+
+# Permitir imports no utilizados en __init__.py
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.ruff.format]
+# Usar comillas dobles para strings
+quote-style = "double"
+
+# Usar espacios para indentación
+indent-style = "space"
+
+# Respetar la presencia/ausencia de trailing commas
+skip-magic-trailing-comma = false
+
+[tool.ruff.lint.isort]
+# Configuración de ordenamiento de imports
+force-single-line = false
+force-sort-within-sections = false
+lines-after-imports = 2
