@@ -87,7 +87,50 @@ Configure `.vscode/settings.json`:
 
 ---
 
-## 5. Common uv usage
+## 5. Makefile Commands
+
+This project includes a `Makefile` with convenient commands for setup and maintenance:
+
+### Available Commands
+
+```bash
+# Complete project setup (install uv + pre-commit hooks)
+make install
+
+# Run all pre-commit hooks on all files
+make hooks
+
+# Update pre-commit hook versions
+make hooks-update
+```
+
+### Command Details
+
+- **`make install`**: 
+  - Downloads and installs `uv` if not already present
+  - Installs pre-commit hooks for code quality checks
+  - Sets up the development environment automatically
+
+- **`make hooks`**: 
+  - Runs all configured pre-commit hooks on every file in the repository
+  - Useful for checking code quality across the entire project
+
+- **`make hooks-update`**: 
+  - Updates all pre-commit hooks to their latest versions
+  - Recommended to run periodically to keep tools up-to-date
+
+### Usage Example
+
+After cloning the repository, simply run:
+```bash
+make install
+```
+
+This single command will set up your entire development environment!
+
+---
+
+## 6. Common uv usage
 
 Run a script:
 
