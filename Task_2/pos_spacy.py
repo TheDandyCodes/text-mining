@@ -4,6 +4,7 @@ from typing import Literal
 import spacy
 from spacy.tokens import Doc
 
+
 # If not installed: python -m spacy download en_core_web_sm
 nlp = spacy.load("en_core_web_sm")  # 3.x/4.x
 
@@ -43,9 +44,7 @@ def spacy_pos(
             elif tagging == "UPOS":
                 tag = token.pos_
             else:
-                raise ValueError(
-                    f"Unknown tagging type: {tagging}. Must be 'PTB' or 'UPOS'."
-                )
+                raise ValueError(f"Unknown tagging type: {tagging}. Must be 'PTB' or 'UPOS'.")
 
             sentence_tags.append((sentence_tokens[i], tag))
 
@@ -57,9 +56,7 @@ def spacy_pos(
 if __name__ == "__main__":
     import nltk
 
-    sample = (
-        "Time flies like an arrow; fruit flies like a banana. The old man the boats."
-    )
+    sample = "Time flies like an arrow; fruit flies like a banana. The old man the boats."
 
     # Tokenize the sample text like stanford_pos expects
     sents = nltk.sent_tokenize(sample)

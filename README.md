@@ -130,7 +130,147 @@ This single command will set up your entire development environment!
 
 ---
 
-## 6. Common uv usage
+## 6. Pre-commit Hooks: Calidad de Código Automática
+
+### ¿Qué son los hooks y pre-commit?
+
+Los **hooks** son scripts que se ejecutan automáticamente en ciertos momentos de Git (antes de commit, push, etc.). **Pre-commit** es una herramienta que facilita su configuración y uso.
+
+**Piénsalo así**: Antes de guardar tu código en Git, pre-commit automáticamente:
+- ✅ Formatea tu código (lo hace bonito y consistente)
+- ✅ Encuentra errores comunes
+- ✅ Ordena imports
+- ✅ Elimina espacios innecesarios
+- ✅ Verifica sintaxis de archivos
+
+### Configuración inicial (ya está hecho en este proyecto)
+
+```bash
+# 1. Instalar pre-commit (ya incluido en dependencies)
+uv add --dev pre-commit ruff
+
+# 2. Instalar los hooks en tu repositorio git
+uv run pre-commit install
+
+# ¡Listo! Ahora funciona automáticamente
+```
+
+### ¿Cómo funciona en la práctica?
+
+#### Ejemplo 1: Commit normal
+```bash
+git add .
+git commit -m "Mi cambio"
+
+# 🔧 Pre-commit se ejecuta automáticamente:
+# ✅ trim trailing whitespace...........Passed
+# ✅ fix end of files...................Passed
+# ✅ ruff...............................Passed
+# ✅ ruff format........................Passed
+# ✅ [main abc123] Mi cambio
+```
+
+#### Ejemplo 2: Cuando hay problemas
+```bash
+git add .
+git commit -m "Código con errores"
+
+# ❌ Pre-commit encuentra problemas:
+# ❌ ruff...............................Failed
+# - import unused detected
+# - line too long detected
+#
+# ¡Git NO hace el commit hasta que se arreglen!
+```
+
+### Comandos útiles
+
+```bash
+# Ejecutar hooks manualmente en todos los archivos
+uv run pre-commit run --all-files
+
+# Ejecutar hooks solo en archivos específicos
+uv run pre-commit run --files mi_archivo.py
+
+# Script rápido para formatear código
+./format_code.sh
+
+# Saltarse hooks temporalmente (¡no recomendado!)
+git commit -m "mensaje" --no-verify
+```
+
+### Herramientas incluidas (Ruff)
+
+Este proyecto usa **Ruff**, una herramienta súper rápida que reemplaza:
+- **Black** (formateo de código)
+- **isort** (ordenamiento de imports)
+- **flake8** (detección de errores)
+- **pyupgrade** (modernización de código)
+
+**Una sola herramienta = todo más simple y rápido** 🚀
+
+### Configuración personalizable
+
+Los hooks están configurados en:
+- `.pre-commit-config.yaml` - Qué hooks ejecutar
+- `pyproject.toml` - Configuración de Ruff
+
+```yaml
+# .pre-commit-config.yaml (simplificado)
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    hooks:
+      - id: trailing-whitespace  # Elimina espacios extra
+      - id: end-of-file-fixer   # Añade línea final
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    hooks:
+      - id: ruff              # Linter (encuentra errores)
+      - id: ruff-format       # Formateador (hace código bonito)
+```
+
+### Demostración práctica
+
+Prueba esto para ver cómo funciona:
+
+```bash
+# 1. Crear archivo con código mal formateado
+echo 'import os,sys
+def funcion_mal( x,y ):
+    return x+y    ' > test_malo.py
+
+# 2. Intentar hacer commit
+git add test_malo.py
+git commit -m "código malo"
+
+# 3. Ver cómo pre-commit lo arregla automáticamente:
+# ❌ ruff...........................Failed
+# - import unused detected
+# - multiple imports on one line
+#
+# ✅ ruff format...................Passed
+# - code automatically formatted
+
+# 4. El archivo ahora está limpio y formateado
+cat test_malo.py
+# import os
+# import sys
+#
+# def funcion_mal(x, y):
+#     return x + y
+```
+
+### Beneficios
+
+✅ **Código consistente**: Todo el equipo usa el mismo formato
+✅ **Menos errores**: Detecta problemas antes del commit
+✅ **Automático**: No tienes que acordarte de formatear
+✅ **Rápido**: Ruff es 10-100x más rápido que herramientas tradicionales
+✅ **Colaboración**: PRs más limpios, menos discusiones sobre estilo
+
+---
+
+## 7. Common uv usage
 
 Run a script:
 

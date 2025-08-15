@@ -1,6 +1,7 @@
 # stanford_pos_nltk.py
 import nltk
 
+
 # Basic downloads (one time only)
 nltk.download("punkt_tab")
 
@@ -11,10 +12,10 @@ except Exception:
     from nltk.tag.stanford import StanfordPOSTagger  # fallback for old NLTK versions
 
 # 1) Paths to YOUR files:
-STANFORD_JAR = "stanford-postagger-full-2020-11-17/stanford-postagger-4.2.0.jar"  # or 'stanford-postagger.jar'
-STANFORD_MODEL = (
-    "stanford-postagger-full-2020-11-17/models/english-left3words-distsim.tagger"
+STANFORD_JAR = (
+    "stanford-postagger-full-2020-11-17/stanford-postagger-4.2.0.jar"  # or 'stanford-postagger.jar'
 )
+STANFORD_MODEL = "stanford-postagger-full-2020-11-17/models/english-left3words-distsim.tagger"
 # (in some packages you also have 'english-bidirectional-distsim.tagger')
 
 # 2) Build the tagger
@@ -40,9 +41,7 @@ def stanford_pos(tokenized_text: list[list[str]]) -> list[list[tuple[str, str]]]
 
 
 if __name__ == "__main__":
-    sample = (
-        "Time flies like an arrow; fruit flies like a banana. The old man the boats."
-    )
+    sample = "Time flies like an arrow; fruit flies like a banana. The old man the boats."
     # Tokenize the raw text for both taggers
     tokenized_text = [[str(word) for word, _ in sent] for sent in sample]
 
