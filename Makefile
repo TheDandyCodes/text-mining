@@ -1,5 +1,5 @@
 .ONESHELL:
-.PHONY: install hooks hooks-update
+.PHONY: install hooks hooks-update spacy-model
 
 SHELL := /usr/bin/env bash
 
@@ -20,3 +20,7 @@ hooks:
 # Actualiza versiones de hooks (opcional)
 hooks-update:
 	uv run pre-commit autoupdate
+
+# Descarga el modelo de spaCy en_core_web_sm
+spacy-model:
+	uv run python -m spacy download en_core_web_sm
