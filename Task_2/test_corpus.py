@@ -13,6 +13,13 @@ class POSMismatch(TypedDict):
     tag2: str
 
 
+class POSMismatchGold(TypedDict):
+    word: str
+    model_tag: str
+    gold_word: str
+    gold_tag: str
+
+
 # Check if treebank corpus is available, if not, download it
 try:
     treebank.tagged_sents()
@@ -57,18 +64,34 @@ def compare_pos_taggers(pos_tag_output_1, pos_tag_output_2) -> list[POSMismatch]
     return mismatches
 
 
-def accuracy(pos_tag_output, gold) -> float:
+def accuracy(
+    pos_tag_output, gold, return_mismatches: bool = False
+) -> float | tuple[float, list[POSMismatchGold]]:
     """
     Computes the accuracy of a POS tagger's output compared to the gold standard.
     """
     correct = 0
     total = 0
+    mismatches = []
     for sent, gold_sent in zip(pos_tag_output, gold):
-        for (_word, tag), (_gold_word, gold_tag) in zip(sent, gold_sent):
+        for (word, tag), (gold_word, gold_tag) in zip(sent, gold_sent):
             if tag == gold_tag:
                 correct += 1
+            else:
+                if return_mismatches:
+                    mismatches.append(
+                        {
+                            "word": word,
+                            "model_tag": tag,
+                            "gold_word": gold_word,
+                            "gold_tag": gold_tag,
+                        }
+                    )
             total += 1
-    return correct / total if total > 0 else 0.0
+    if return_mismatches:
+        return correct / total if total > 0 else 0.0, mismatches
+    else:
+        return correct / total if total > 0 else 0.0
 
 
 if __name__ == "__main__":
@@ -85,7 +108,7 @@ if __name__ == "__main__":
             f"Word: {mismatch['word1']}, Stanford NLTK Tag: {mismatch['tag1']}, spaCy Tag: {mismatch['tag2']}"
         )
 
-    acc_st_nltk = accuracy(pos_tag_output_st_nltk, gold)
-    acc_spacy = accuracy(pos_tag_output_spacy, gold)
+    acc_st_nltk, mismatches_st_nltk = accuracy(pos_tag_output_st_nltk, gold, return_mismatches=True)  # type: ignore
+    acc_spacy, mismatches_spacy = accuracy(pos_tag_output_spacy, gold, return_mismatches=True)  # type: ignore
     print(f"Accuracy (Stanford NLTK): {acc_st_nltk:.4f}")
     print(f"Accuracy (spaCy): {acc_spacy:.4f}")
