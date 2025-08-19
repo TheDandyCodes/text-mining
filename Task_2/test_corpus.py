@@ -51,6 +51,27 @@ def extract_raw_text(gold):
     return " ".join(result)
 
 
+def drop_traces_tagged(gold):
+    """Removes traces (-NONE-) from a list of labelled statements.
+
+    Parameters
+    ----------
+    gold : list[list[tuple[str, str]]]
+        A list of sentences, where each sentence is a list of tuples (word, tag)
+
+    Returns
+    -------
+    list[list[tuple[str, str]]]
+        A list of sentences without the traces -NONE-
+    """
+    result = []
+    for sent in gold:
+        # Filtrar tokens con tag '-NONE-' de cada sentencia
+        filtered_sent = [(w, pos) for (w, pos) in sent if pos != "-NONE-"]
+        result.append(filtered_sent)
+    return result
+
+
 def compare_pos_taggers(pos_tag_output_1, pos_tag_output_2) -> list[POSMismatch]:
     """
     Compares the output of two POS taggers.
