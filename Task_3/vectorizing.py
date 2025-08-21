@@ -1,13 +1,13 @@
 from typing import Iterable, Union
 
-import numpy as np
 import pandas as pd
+from scipy.sparse._csr import csr_matrix
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 
 def vectorize_text(
     text: Union[list[str], pd.Series, Iterable[str]], method: str = "bow"
-) -> np.ndarray:
+) -> csr_matrix:
     """Vectorize text using different methods.
 
     Parameters
@@ -19,8 +19,8 @@ def vectorize_text(
 
     Returns
     -------
-    np.ndarray
-        The vectorized representation of the text.
+    csr_matrix
+        The vectorized sparse matrix representation of the text.
     """
     if method == "bow":
         # Create the CountVectorizer object
