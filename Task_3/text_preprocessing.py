@@ -1,5 +1,7 @@
 import re
 
+import spacy
+
 
 def clean_header(content: str) -> str:
     """Remove newsgroup headers from the content.
@@ -22,23 +24,12 @@ def clean_header(content: str) -> str:
 
     for i, line in enumerate(lines):
         if in_header:
-            # Look for the end of header (empty line after "Lines:" field)
+            # Look for the end of header (empty line after header fields)
             if line.strip() == "" and i > 0:
-                # Check if previous lines contain typical header fields
+                # Check if previous lines contain header fields (any word followed by colon)
                 prev_lines = lines[max(0, i - 5) : i]
                 has_header_fields = any(
-                    line.strip().startswith(
-                        (
-                            "From:",
-                            "Subject:",
-                            "Date:",
-                            "Message-ID:",
-                            "Lines:",
-                            "Organization:",
-                            "Newsgroups:",
-                        )
-                    )
-                    for line in prev_lines
+                    re.match(r"^[A-Za-z][A-Za-z0-9\-_]*:", line.strip()) for line in prev_lines
                 )
                 if has_header_fields:
                     content_start = i + 1
@@ -76,6 +67,37 @@ def remove_writes_lines(content: str) -> str:
     return "\n".join(cleaned_lines)
 
 
+def remove_firm(content: str) -> str:
+    # TODO
+    return ""
+
+
+def preprocessing_pipeline(
+    content: str, model: str = "en_core_web_sm", lemmatize: bool = True
+) -> list[str]:
+    # Carga el modelo de spaCy en inglés
+    nlp = spacy.load(model)
+
+    # Procesa el texto
+    doc = nlp(content)
+
+    # Filtra tokens que no sean stop words ni signos de puntuación
+    tokens = [
+        token.lemma_.lower() if lemmatize else token.text.lower()
+        for token in doc
+        if not token.is_punct
+        and not token.is_space
+        and token.text.strip() != ""  # Exclude empty tokens or tokens consisting only of spaces
+        and not re.match(r"^[\s\t\n\r]+$", token.text)  # Exclude tokens that are only whitespace
+        and not re.match(
+            r"^[^\w\s]+$", token.text
+        )  # Exclude tokens that are only symbols (|, >, ^^^, etc.)
+        and len(token.text.strip()) > 0  # Ensure there is real content
+    ]
+
+    return tokens
+
+
 if __name__ == "__main__":
     import pandas as pd
 
@@ -83,4 +105,9 @@ if __name__ == "__main__":
     corpus_raw_df["cleaned_content"] = (
         corpus_raw_df["content"].apply(clean_header).apply(remove_writes_lines)
     )
+
+    text = """
+    Hola, queria consultarte algo, puedo? Estoy pensando en comprar una television por 32.50$ aunque en amazon está por 33,00€
+    """
+    print(preprocessing_pipeline(text))
     print(corpus_raw_df.head())
