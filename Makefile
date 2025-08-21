@@ -21,6 +21,6 @@ hooks:
 hooks-update:
 	uv run pre-commit autoupdate
 
-# Descarga el modelo de spaCy en_core_web_sm
+# Descarga el modelo de spaCy MODEL=en_core_web_sm
 spacy-model:
-	uv run python -m spacy download en_core_web_sm
+	uv run python -m spacy download $(MODEL)
