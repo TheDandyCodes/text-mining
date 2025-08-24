@@ -7,7 +7,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 def vectorize_text(
     text: Union[list[str], pd.Series, Iterable[str]], method: str = "bow"
-) -> csr_matrix:
+) -> tuple[csr_matrix, dict[str, int]]:
     """Vectorize text using different methods.
 
     Parameters
@@ -19,7 +19,7 @@ def vectorize_text(
 
     Returns
     -------
-    csr_matrix
+    tuple[csr_matrix, list[str]]
         The vectorized sparse matrix representation of the text.
     """
     if method == "bow":
@@ -36,7 +36,10 @@ def vectorize_text(
     # Fit and transform the texts to obtain the count matrix
     X = vectorizer.fit_transform(text)
 
-    return X
+    # Vocabulary
+    vocab = vectorizer.vocabulary_
+
+    return X, vocab
 
 
 if __name__ == "__main__":
