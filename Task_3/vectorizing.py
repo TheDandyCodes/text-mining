@@ -1,6 +1,8 @@
+import json
 from typing import Iterable, Union
 
 import pandas as pd
+from scipy import sparse
 from scipy.sparse._csr import csr_matrix
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
@@ -40,6 +42,37 @@ def vectorize_text(
     vocab = vectorizer.vocabulary_
 
     return X, vocab
+
+
+def save_vectors_scipy(vectors, vocab, filepath: str):
+    """Guarda vectores dispersos usando formato SciPy"""
+    import os
+
+    # Crear directorios si no existen
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+
+    # Guardar matrices dispersas
+    sparse.save_npz(f"{filepath}.npz", vectors)
+
+    # Guardar vocabularios como JSON o pickle
+    with open(f"{filepath}_vocab.json", "w") as f:
+        json.dump(vocab, f)
+
+    print(f"Matrices dispersas guardadas en {filepath}.npz")
+
+
+def load_vectors_scipy(filepath: str):
+    """Carga vectores dispersos desde archivos SciPy"""
+    import json
+
+    # Cargar matrices
+    vectors = sparse.load_npz(f"{filepath}.npz")
+
+    # Cargar vocabularios
+    with open(f"{filepath}_vocab.json") as f:
+        vocab = json.load(f)
+
+    return vectors, vocab
 
 
 if __name__ == "__main__":
