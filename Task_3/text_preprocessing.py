@@ -75,6 +75,22 @@ def remove_firm(content: str) -> str:
 def preprocessing_pipeline(
     content: str, model: str = "en_core_web_sm", lemmatize: bool = True
 ) -> list[str]:
+    """Preprocess the text content.
+
+    Parameters
+    ----------
+    content : str
+        The raw text content to preprocess.
+    model : str, optional
+        The spaCy model to use for tokenization and lemmatization, by default "en_core_web_sm"
+    lemmatize : bool, optional
+        Whether to apply lemmatization to the tokens, by default True
+
+    Returns
+    -------
+    list[str]
+        The list of preprocessed tokens.
+    """
     # Carga el modelo de spaCy en inglés
     nlp = spacy.load(model)
 
