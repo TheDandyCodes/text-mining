@@ -74,7 +74,7 @@ def remove_firm(content: str) -> str:
 
 def preprocessing_pipeline(
     content: str, model: str = "en_core_web_sm", lemmatize: bool = True
-) -> str:
+) -> list[str]:
     # Carga el modelo de spaCy en inglés
     nlp = spacy.load(model)
 
@@ -95,7 +95,7 @@ def preprocessing_pipeline(
         and len(token.text.strip()) > 0  # Ensure there is real content
     ]
 
-    return " ".join(tokens)
+    return tokens
 
 
 if __name__ == "__main__":
@@ -107,7 +107,7 @@ if __name__ == "__main__":
     )
 
     text = """
-    Hi, I wanted to ask you something, if I may. I'm thinking of buying a television for $32.50, although it's €33.00 on Amazon.
+    Hola, queria consultarte algo, puedo? Estoy pensando en comprar una television por 32.50$ aunque en amazon está por 33,00€
     """
     print(preprocessing_pipeline(text))
     print(corpus_raw_df.head())
