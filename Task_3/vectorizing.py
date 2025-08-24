@@ -44,31 +44,52 @@ def vectorize_text(
     return X, vocab
 
 
-def save_vectors_scipy(vectors, vocab, filepath: str):
-    """Guarda vectores dispersos usando formato SciPy"""
+def save_vectors_scipy(vectors: csr_matrix, vocab: dict[str, int], filepath: str):
+    """Save vectorized text data in SciPy format.
+
+    Parameters
+    ----------
+    vectors : csr_matrix
+        The sparse matrix representation of the vectorized text.
+    vocab : dict[str, int]
+        The vocabulary mapping of words to their feature indices.
+    filepath : str
+        The file path to save the vectorized data.
+    """
     import os
 
-    # Crear directorios si no existen
+    # Create directories if they do not exist
     os.makedirs(os.path.dirname(filepath), exist_ok=True)
 
-    # Guardar matrices dispersas
+    # Save sparse matrices
     sparse.save_npz(f"{filepath}.npz", vectors)
 
-    # Guardar vocabularios como JSON o pickle
+    # Save vocabularies as JSON or pickle
     with open(f"{filepath}_vocab.json", "w") as f:
         json.dump(vocab, f)
 
-    print(f"Matrices dispersas guardadas en {filepath}.npz")
+    print(f"Sparse matrices saved to {filepath}.npz")
 
 
 def load_vectors_scipy(filepath: str):
-    """Carga vectores dispersos desde archivos SciPy"""
+    """Load vectorized text data from SciPy format.
+
+    Parameters
+    ----------
+    filepath : str
+        The file path to load the vectorized data.
+
+    Returns
+    -------
+    tuple[csr_matrix, dict[str, int]]
+        The vectorized sparse matrix representation of the text and the vocabulary mapping.
+    """
     import json
 
-    # Cargar matrices
+    # Load matrices
     vectors = sparse.load_npz(f"{filepath}.npz")
 
-    # Cargar vocabularios
+    # Load vocabularies
     with open(f"{filepath}_vocab.json") as f:
         vocab = json.load(f)
 
