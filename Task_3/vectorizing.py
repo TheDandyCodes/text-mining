@@ -104,11 +104,13 @@ if __name__ == "__main__":
     ]
 
     # Example usage
-    bow_vectors = vectorize_text(texts, method="bow")
-    tfidf_vectors = vectorize_text(texts, method="tfidf")
+    bow_vectors, bow_vocab = vectorize_text(texts, method="bow")
+    tfidf_vectors, tfidf_vocab = vectorize_text(texts, method="tfidf")
 
     print("Bag of Words Vectors:")
     print(bow_vectors)
+    print("BoW shape:", bow_vectors.shape)
 
     print("\nTF-IDF Vectors:")
     print(tfidf_vectors)
+    print("TF-IDF shape:", tfidf_vectors.shape)
