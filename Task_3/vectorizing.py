@@ -5,10 +5,13 @@ import pandas as pd
 from scipy import sparse
 from scipy.sparse._csr import csr_matrix
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.preprocessing import normalize
 
 
 def vectorize_text(
-    text: Union[list[str], pd.Series, Iterable[str]], method: str = "bow"
+    text: Union[list[str], pd.Series, Iterable[str]],
+    method: str = "bow",
+    apply_l2_norm: bool = True,
 ) -> tuple[csr_matrix, dict[str, int]]:
     """Vectorize text using different methods.
 
@@ -18,18 +21,20 @@ def vectorize_text(
         The text to vectorize, can be a list of strings, a pandas Series, or any iterable of strings.
     method : str, optional
         The vectorization method to use, by default "bow"
+    apply_l2_norm : bool, optional
+        Whether to apply L2 normalization to the vectors, by default True
 
     Returns
     -------
-    tuple[csr_matrix, list[str]]
-        The vectorized sparse matrix representation of the text.
+    tuple[csr_matrix, dict[str, int]]
+        The vectorized sparse matrix representation of the text and the vocabulary mapping.
     """
     if method == "bow":
         # Create the CountVectorizer object
         vectorizer = CountVectorizer()
     elif method == "tfidf":
         # Create the TfidfVectorizer object
-        vectorizer = TfidfVectorizer()
+        vectorizer = TfidfVectorizer(norm="l2")
     else:
         raise ValueError(
             f"Unsupported vectorization method: {method}. Available methods are: 'bow', 'tfidf'."
@@ -37,6 +42,10 @@ def vectorize_text(
 
     # Fit and transform the texts to obtain the count matrix
     X = vectorizer.fit_transform(text)
+
+    # Apply L2 normalization if requested
+    if apply_l2_norm and method == "bow":
+        X = normalize(X, norm="l2")
 
     # Vocabulary
     vocab = vectorizer.vocabulary_
@@ -105,12 +114,19 @@ if __name__ == "__main__":
 
     # Example usage
     bow_vectors, bow_vocab = vectorize_text(texts, method="bow")
+    bow_normalized_vectors, bow_normalized_vocab = vectorize_text(
+        texts, method="bow", apply_l2_norm=True
+    )
     tfidf_vectors, tfidf_vocab = vectorize_text(texts, method="tfidf")
 
     print("Bag of Words Vectors:")
-    print(bow_vectors)
+    print(bow_vectors.toarray())
     print("BoW shape:", bow_vectors.shape)
 
+    print("\nBag of Words Vectors (L2 Normalized):")
+    print(bow_normalized_vectors.toarray())
+    print("BoW Normalized shape:", bow_normalized_vectors.shape)
+
     print("\nTF-IDF Vectors:")
-    print(tfidf_vectors)
+    print(tfidf_vectors.toarray())
     print("TF-IDF shape:", tfidf_vectors.shape)
