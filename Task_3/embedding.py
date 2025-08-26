@@ -112,6 +112,11 @@ def create_sentence_embeddings(
             elif method == "additive":
                 sent_embeddings = np.sum(word_embeddings_array, axis=0)
 
+        # Apply L2 normalization to the sentence embedding
+        norm = np.linalg.norm(sent_embeddings)
+        if norm > 0:
+            sent_embeddings = sent_embeddings / norm
+
         sentence_embeddings.append(sent_embeddings)
 
     return np.array(sentence_embeddings)
