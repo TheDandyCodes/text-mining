@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "bcubed>=1.5",
     "gensim>=4.3.3",
     "nltk>=3.9.1",
     "pandas>=2.3.1",

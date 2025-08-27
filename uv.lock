@@ -12,6 +12,18 @@ wheels = [
 ]
 
 [[package]]
+name = "bcubed"
+version = "1.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/4e/fd/bc5455e5cf3e3aa7cf36f9f7c5cf3c81c0a4fb36c4bff8982599e78f8458/bcubed-1.5.tar.gz", hash = "sha256:3dc67a6e4e925d4493ce6bc9747a64a48f84398f31b573f73776c9b836de6ae9", size = 3625, upload-time = "2019-01-17T11:12:04.615Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/56/c4/f06199a7de2236e92d3894672b1f8530d4fc1c02d7453d6c30e379fbce41/bcubed-1.5-py2.py3-none-any.whl", hash = "sha256:b465d0e27527f3834d0b053503868ac09b986853a4d8c14a1fa52a4cefd3ac29", size = 8670, upload-time = "2019-01-17T11:12:03.108Z" },
+]
+
+[[package]]
 name = "black"
 version = "25.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1393,6 +1405,7 @@ name = "text-mining"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "bcubed" },
     { name = "gensim" },
     { name = "nltk" },
     { name = "pandas" },
@@ -1415,6 +1428,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "bcubed", specifier = ">=1.5" },
     { name = "gensim", specifier = ">=4.3.3" },
     { name = "nltk", specifier = ">=3.9.1" },
     { name = "pandas", specifier = ">=2.3.1" },
