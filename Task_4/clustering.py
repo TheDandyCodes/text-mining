@@ -10,7 +10,7 @@ def kmeans_pipeline(tf_vectors, n_clusters: int = 7):
     # between normalized vectors is equivalent to maximizing
     # cosine similarity, i.e., the two measures order
     # the vector pairs in the same way.
-    umap = UMAP(n_components=300, random_state=42)
+    umap = UMAP(n_components=300, random_state=42, metric="cosine")
 
     # Create a normalizer that will apply L2 normalization after UMAP
     normalizer = Normalizer(norm="l2")
